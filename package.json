@@ -16,7 +16,7 @@
     "validate:references": "python3 scripts/validate_references.py",
     "lint": "hardhat build && tsc --noEmit",
     "test": "hardhat test",
-    "test:coverage": "hardhat test"
+    "test:coverage": "hardhat test --coverage"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "4.0.15",

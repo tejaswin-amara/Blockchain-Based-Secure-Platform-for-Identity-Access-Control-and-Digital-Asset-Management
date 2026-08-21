@@ -22,7 +22,7 @@ The dependency audit is now clean: `pnpm audit --audit-level=moderate` reports n
 
 | Finding or Scorecard signal | Why it cannot be fixed only by a commit | Required action |
 |---|---|---|
-| Branch protection score | Main is now protected through the GitHub repository API | Main requires one approving review, successful CodeQL/Echidna/Scorecard/CI checks, linear history, conversation resolution, no force pushes, and administrator enforcement |
+| Branch protection score | Branch protection is controlled by GitHub repository settings rather than source files; the documented policy is the configuration to verify | Verify that main requires one approving review, successful CodeQL/Echidna/Scorecard/CI checks, linear history, conversation resolution, no force pushes, and administrator enforcement |
 | Code-review score | Historical direct pushes cannot be converted into reviewed changesets; the repository now requires reviewed pull requests for future changes | Continue using pull requests and obtain one approval before merging |
 | Maintained score | The repository's age/history is evaluated by Scorecard | Continue maintained releases and reassess after the repository history matures |
 | CII Best Practices score | A project badge requires registration and completion on bestpractices.dev | Register the project and complete the external assessment when ownership and contacts are ready |
