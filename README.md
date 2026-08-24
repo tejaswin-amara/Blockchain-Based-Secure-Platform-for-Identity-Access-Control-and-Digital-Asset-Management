@@ -179,10 +179,7 @@ A verifier reads contract state and events, confirms the token and organizationa
 │   ├── COMPLIANCE-REPORT.md      # Requirement and production-gate assessment
 │   ├── PROBLEM-STATEMENT-TRACEABILITY.md
 │   ├── THREAT-MODEL.md           # Threats, invariants, and abuse cases
-│   ├── ACCEPTANCE-CRITERIA.md    # Final-project role and failure scenarios
-│   ├── FINAL-PROJECT-DATA-DICTIONARY.md
-│   ├── FINAL-PROJECT-ARCHITECTURE-DIAGRAMS.md
-│   ├── FINAL-PROJECT-MIGRATION-NOTES-TEMPLATE.md
+│   ├── ACCEPTANCE-CRITERIA.md    # MVP demonstration criteria
 │   ├── COMPREHENSIVE-IMPROVEMENT-AND-FIX-REGISTER.md
 │   └── runbooks/                 # Operational procedures
 ├── .github/                  # Issues, workflows, ownership, and automation
@@ -196,7 +193,7 @@ Treat private keys as high-impact credentials. Use a hardware-backed or managed 
 
 The platform must not expose personal data through public events, token metadata, logs, error messages, or analytics. Hashing data does not automatically remove privacy risk when the underlying data can be recovered or linked. Define retention, erasure, revocation, subject-access, and legal-review procedures before storing identity-related data.
 
-The repository's `SECURITY.md`, `ARCHITECTURE.md`, ADRs, [`docs/COMPLIANCE-REPORT.md`](docs/COMPLIANCE-REPORT.md), [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md), [`docs/FINAL-PROJECT-DATA-DICTIONARY.md`](docs/FINAL-PROJECT-DATA-DICTIONARY.md), [`docs/ENCRYPTION-KEY-MANAGEMENT.md`](docs/ENCRYPTION-KEY-MANAGEMENT.md), [`docs/SECURITY-SCANNING-STATUS.md`](docs/SECURITY-SCANNING-STATUS.md), and [`docs/COMPREHENSIVE-IMPROVEMENT-AND-FIX-REGISTER.md`](docs/COMPREHENSIVE-IMPROVEMENT-AND-FIX-REGISTER.md) describe the intended controls, current evidence boundaries, and complete remediation backlog. They do not replace an organization-specific security assessment. The active implementation backlog is tracked in [Issue #12](https://github.com/tejaswin-amara/Blockchain-Based-Secure-Platform-for-Identity-Access-Control-and-Digital-Asset-Management/issues/12).
+The repository's `SECURITY.md`, `ARCHITECTURE.md`, ADRs, [`docs/COMPLIANCE-REPORT.md`](docs/COMPLIANCE-REPORT.md), [`docs/THREAT-MODEL.md`](docs/THREAT-MODEL.md), [`docs/ENCRYPTION-KEY-MANAGEMENT.md`](docs/ENCRYPTION-KEY-MANAGEMENT.md), [`docs/SECURITY-SCANNING-STATUS.md`](docs/SECURITY-SCANNING-STATUS.md), and [`docs/COMPREHENSIVE-IMPROVEMENT-AND-FIX-REGISTER.md`](docs/COMPREHENSIVE-IMPROVEMENT-AND-FIX-REGISTER.md) describe the intended controls, current evidence boundaries, and complete remediation backlog. They do not replace an organization-specific security assessment.
 
 ## Maintenance and assurance status
 
