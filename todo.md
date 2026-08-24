@@ -24,3 +24,6 @@
 - [ ] Obtain a named architecture/network/custody/identity owner decision before evaluating any isolated Algorand proof of concept, LocalNet, wallet, SDK, asset, or deployment integration.
 - [x] Use Docker through an authorized daemon to validate Compose configuration and rebuild all local images from a clean cache; record the bounded runtime result and clean all disposable resources.
 - [ ] Reproduce the timed-out Docker migration/API/web health workflow on a Docker-capable host with functioning bridge networking before treating multi-container runtime health as verified evidence.
+- [x] Assess the no-mistakes repository as an MIT-licensed process reference and keep its proxy, hooks, agents, auto-fix behavior, configuration, and code out of the project.
+- [x] Inventory and stage only scanned, project-authored SIH Markdown deliverables with a public provenance/exclusion manifest; exclude supplied templates, portal records, team data, signatures, secrets, and real deployment evidence.
+- [ ] Validate, commit, push, and monitor the final SIH publication set on PR #19 without bypassing required review.
