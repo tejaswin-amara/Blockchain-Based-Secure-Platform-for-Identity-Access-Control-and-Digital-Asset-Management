@@ -43,6 +43,9 @@ export const Header: React.FC<HeaderProps> = ({
           <button type="button" className="nav-link" onClick={() => onScrollTo("audit")}>
             Audit Stream
           </button>
+          <a href="/asset-chain" className="nav-link" style={{ color: "var(--copper-bright)", fontWeight: 600 }}>
+            3D Blockchain
+          </a>
         </nav>
 
         <div className="header-status-group">

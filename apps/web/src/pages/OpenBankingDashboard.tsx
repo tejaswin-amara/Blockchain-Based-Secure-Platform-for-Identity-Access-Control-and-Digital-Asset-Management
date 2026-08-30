@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'wouter';
 
 const API_BASE = 'http://127.0.0.1:8000';
 
@@ -236,6 +237,26 @@ export default function OpenBankingDashboard() {
         </div>
 
         <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+          <Link
+            to="/asset-chain"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: '#b66a42',
+              color: '#f4efe4',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              textDecoration: 'none',
+              fontWeight: 600,
+              fontSize: '13px',
+              border: '1px solid #d08a5d',
+              transition: 'all 0.2s ease',
+              cursor: 'pointer'
+            }}
+          >
+            🧊 3D Asset Blockchain
+          </Link>
           <div style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: '8px', padding: '8px 16px', textAlign: 'right' }}>
             <div style={{ fontSize: '11px', color: '#64748b' }}>SYSTEM STATUS</div>
             <div style={{ fontSize: '13px', color: '#4ade80', fontWeight: 600 }}>🟢 FastAPI & Hardhat Online</div>

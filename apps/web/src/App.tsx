@@ -5,14 +5,19 @@ import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import AssetChainPage from "./pages/AssetChainPage";
 import Home from "./pages/Home";
 import OpenBankingDashboard from "./pages/OpenBankingDashboard";
+import PlatformDashboard from "./pages/PlatformDashboard";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={OpenBankingDashboard} />
-      <Route path="/dashboard" component={OpenBankingDashboard} />
+      <Route path="/" component={PlatformDashboard} />
+      <Route path="/dashboard" component={PlatformDashboard} />
+      <Route path="/platform" component={PlatformDashboard} />
+      <Route path="/open-banking" component={OpenBankingDashboard} />
+      <Route path="/asset-chain" component={AssetChainPage} />
       <Route path="/home" component={Home} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
