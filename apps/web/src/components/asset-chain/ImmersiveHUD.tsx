@@ -11,6 +11,10 @@ import {
   Radio,
   Layers,
   Sparkles,
+  User,
+  Fingerprint,
+  FileText,
+  Key,
 } from 'lucide-react';
 import type { AssetBlock } from '@/types/asset-chain';
 
@@ -25,6 +29,8 @@ interface ImmersiveHUDProps {
   onOpenAssets: () => void;
   onOpenNetwork: () => void;
   onOpenBanking: () => void;
+  onSelectUserSection?: (section: 'identity' | 'permissions' | 'assets' | 'profile') => void;
+  activeUserSection?: string;
   hasEntered: boolean;
   onEnter: () => void;
   peerCount: number;
@@ -41,6 +47,8 @@ export function ImmersiveHUD({
   onOpenAssets,
   onOpenNetwork,
   onOpenBanking,
+  onSelectUserSection,
+  activeUserSection = 'identity',
   hasEntered,
   onEnter,
   peerCount,
@@ -49,9 +57,9 @@ export function ImmersiveHUD({
 
   return (
     <>
-      {/* ── CINEMATIC OPENING ENTRY CURTAIN ──────────────────────────────────── */}
+      {/* ── CINEMATIC OPENING ENTRY CURTAIN (Admin Only or First Load) ──────── */}
       <AnimatePresence>
-        {!hasEntered && (
+        {!hasEntered && role === 'admin' && (
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
@@ -64,7 +72,7 @@ export function ImmersiveHUD({
                 <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
                 AETHELIA ARCHITECTURE
               </span>
-              <span>VERIFIABLE LEDGER PROTOCOL 01</span>
+              <span>ADMINISTRATIVE SPATIAL ENGINE</span>
             </div>
 
             {/* Center Cinematic Entry Title */}
@@ -117,13 +125,13 @@ export function ImmersiveHUD({
             {/* Bottom Telemetry */}
             <div className="w-full flex items-center justify-between text-[10px] font-mono text-zinc-600 uppercase">
               <span>SHA-256 CONSTRAINED STATE ENGINE</span>
-              <span>SCROLL / CLICK INTERACTION ENABLED</span>
+              <span>ADMINISTRATIVE CLEARANCE ACTIVE</span>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── MINIMAL FLOATING HUD CHROME (Active in 3D Scene) ────────────────── */}
+      {/* ── MINIMAL FLOATING HUD CHROME ─────────────────────────────────────── */}
       <div className="pointer-events-none fixed inset-0 z-30 flex flex-col justify-between p-5 md:p-8 select-none font-mono">
         {/* Top Floating Bar */}
         <header className="flex items-center justify-between">
@@ -140,84 +148,141 @@ export function ImmersiveHUD({
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
               </div>
               <span className="text-[9px] text-zinc-500 tracking-widest uppercase block">
-                SPATIAL PROVENANCE ENGINE
+                {role === 'admin' ? 'SPATIAL PROVENANCE ENGINE' : 'PERSONAL IDENTITY VAULT'}
               </span>
             </div>
           </div>
 
-          {/* Top-Right Architectural Text Navigation Links */}
+          {/* Top-Right Navigation Links strictly filtered by Role */}
           <div className="pointer-events-auto flex items-center space-x-2 md:space-x-4 text-[11px] text-zinc-400">
-            {isInspecting ? (
-              <button
-                onClick={onExitInspect}
-                className="px-4 py-2 rounded-full border border-cyan-500/40 bg-cyan-950/40 hover:bg-cyan-900/50 text-cyan-300 flex items-center gap-2 backdrop-blur-xl transition-all cursor-pointer shadow-lg shadow-cyan-950/40"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" />
-                <span>RETURN TO ORBIT</span>
-              </button>
+            {role === 'admin' ? (
+              /* ── ADMIN NAVIGATION ────────────────────────────────────────── */
+              isInspecting ? (
+                <button
+                  onClick={onExitInspect}
+                  className="px-4 py-2 rounded-full border border-cyan-500/40 bg-cyan-950/40 hover:bg-cyan-900/50 text-cyan-300 flex items-center gap-2 backdrop-blur-xl transition-all cursor-pointer shadow-lg shadow-cyan-950/40"
+                >
+                  <ArrowLeft className="h-3.5 w-3.5" />
+                  <span>RETURN TO ORBIT</span>
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={onOpenAssets}
+                    className="px-3 py-1.5 rounded-lg border border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white backdrop-blur-md transition-all cursor-pointer"
+                  >
+                    <span className="hidden sm:inline">VAULT</span> ASSETS
+                  </button>
+
+                  <button
+                    onClick={onOpenNetwork}
+                    className="px-3 py-1.5 rounded-lg border border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white backdrop-blur-md transition-all cursor-pointer"
+                  >
+                    <span className="hidden sm:inline">P2P</span> NETWORK
+                  </button>
+
+                  <button
+                    onClick={onExitInspect}
+                    className="px-3 py-1.5 rounded-lg border border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white backdrop-blur-md transition-all cursor-pointer"
+                  >
+                    BLOCKCHAIN
+                  </button>
+
+                  <button
+                    onClick={onOpenAdmin}
+                    className="px-3 py-1.5 rounded-lg border border-[var(--copper)]/30 bg-[var(--copper)]/10 hover:bg-[var(--copper)]/20 text-[var(--copper-bright)] backdrop-blur-md transition-all cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Shield className="h-3 w-3" />
+                    <span>ADMIN</span>
+                  </button>
+
+                  <button
+                    onClick={onOpenBanking}
+                    className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white backdrop-blur-md transition-all cursor-pointer"
+                    title="Open Banking Consent Gateway"
+                  >
+                    <span>BANKING</span>
+                    <ExternalLink className="h-2.5 w-2.5 text-zinc-500" />
+                  </button>
+                </>
+              )
             ) : (
+              /* ── USER NAVIGATION (Zero Blockchain/Admin Links) ────────────── */
               <>
                 <button
-                  onClick={onOpenAssets}
-                  className="px-3 py-1.5 rounded-lg border border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white backdrop-blur-md transition-all cursor-pointer"
+                  onClick={() => onSelectUserSection && onSelectUserSection('identity')}
+                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                    activeUserSection === 'identity'
+                      ? 'border-emerald-500/40 bg-emerald-950/30 text-emerald-400 font-bold'
+                      : 'border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white'
+                  }`}
                 >
-                  <span className="hidden sm:inline">VAULT</span> ASSETS
+                  IDENTITY
                 </button>
 
                 <button
-                  onClick={onOpenNetwork}
-                  className="px-3 py-1.5 rounded-lg border border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white backdrop-blur-md transition-all cursor-pointer"
+                  onClick={() => onSelectUserSection && onSelectUserSection('permissions')}
+                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                    activeUserSection === 'permissions'
+                      ? 'border-blue-500/40 bg-blue-950/30 text-blue-400 font-bold'
+                      : 'border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white'
+                  }`}
                 >
-                  <span className="hidden sm:inline">P2P</span> NETWORK
+                  PERMISSIONS
                 </button>
 
                 <button
-                  onClick={onOpenAdmin}
-                  className="px-3 py-1.5 rounded-lg border border-[var(--copper)]/30 bg-[var(--copper)]/10 hover:bg-[var(--copper)]/20 text-[var(--copper-bright)] backdrop-blur-md transition-all cursor-pointer flex items-center gap-1.5"
+                  onClick={() => onSelectUserSection && onSelectUserSection('assets')}
+                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                    activeUserSection === 'assets'
+                      ? 'border-[var(--copper)]/40 bg-[var(--copper)]/20 text-[var(--copper-bright)] font-bold'
+                      : 'border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white'
+                  }`}
                 >
-                  <Shield className="h-3 w-3" />
-                  <span>ADMIN</span>
+                  MY ASSETS
                 </button>
 
                 <button
-                  onClick={onOpenBanking}
-                  className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-lg border border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white backdrop-blur-md transition-all cursor-pointer"
-                  title="Open Banking Consent & DID Gateway"
+                  onClick={() => onSelectUserSection && onSelectUserSection('profile')}
+                  className={`px-3 py-1.5 rounded-lg border transition-all cursor-pointer ${
+                    activeUserSection === 'profile'
+                      ? 'border-purple-500/40 bg-purple-950/30 text-purple-400 font-bold'
+                      : 'border-white/[0.06] bg-black/40 hover:bg-white/[0.08] hover:text-white'
+                  }`}
                 >
-                  <span>BANKING</span>
-                  <ExternalLink className="h-2.5 w-2.5 text-zinc-500" />
+                  PROFILE
                 </button>
-
-                {/* Role Switcher Pill */}
-                <div className="flex p-0.5 rounded-lg border border-white/[0.08] bg-black/50 text-[10px]">
-                  <button
-                    onClick={() => onToggleRole('admin')}
-                    className={`px-2 py-1 rounded transition-all cursor-pointer ${
-                      role === 'admin'
-                        ? 'bg-[var(--copper)] text-white font-bold'
-                        : 'text-zinc-500 hover:text-zinc-300'
-                    }`}
-                  >
-                    ADMIN
-                  </button>
-                  <button
-                    onClick={() => onToggleRole('user')}
-                    className={`px-2 py-1 rounded transition-all cursor-pointer ${
-                      role === 'user'
-                        ? 'bg-emerald-600 text-white font-bold'
-                        : 'text-zinc-500 hover:text-zinc-300'
-                    }`}
-                  >
-                    USER
-                  </button>
-                </div>
               </>
             )}
+
+            {/* Role Switcher Pill */}
+            <div className="flex p-0.5 rounded-lg border border-white/[0.1] bg-black/60 text-[10px] shadow-lg">
+              <button
+                onClick={() => onToggleRole('admin')}
+                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
+                  role === 'admin'
+                    ? 'bg-[var(--copper)] text-white font-bold shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                ADMIN
+              </button>
+              <button
+                onClick={() => onToggleRole('user')}
+                className={`px-2.5 py-1 rounded transition-all cursor-pointer ${
+                  role === 'user'
+                    ? 'bg-emerald-600 text-white font-bold shadow-sm'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                USER
+              </button>
+            </div>
           </div>
         </header>
 
-        {/* Bottom Floating Discovery Indicator (Consistently above footer, clearing blocks) */}
-        {!isInspecting && (
+        {/* Center-Bottom Floating Discovery Indicator (Admin & Exploring only) */}
+        {!isInspecting && role === 'admin' && (
           <div className="absolute bottom-20 left-1/2 -translate-x-1/2 pointer-events-none z-20">
             <motion.div
               animate={{ y: [0, -4, 0], opacity: [0.75, 1, 0.75] }}
@@ -230,35 +295,37 @@ export function ImmersiveHUD({
           </div>
         )}
 
-        {/* Bottom Floating Telemetry Ribbon */}
-        <footer className="flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-zinc-500 tracking-widest uppercase">
-          {/* Block Height & Hash Preview */}
-          <div className="pointer-events-auto flex items-center space-x-3 px-3 py-1.5 rounded-lg bg-black/50 border border-white/[0.06] backdrop-blur-md">
-            <span className="text-zinc-400">BLOCK:</span>
-            <span className="text-white font-bold">
-              {latestBlock ? `#${latestBlock.index.toString().padStart(3, '0')}` : '#000'}
-            </span>
-            <span className="text-zinc-600">•</span>
-            <span className="text-cyan-400">
-              {latestBlock?.currentHash ? `${latestBlock.currentHash.substring(0, 10)}...` : '0x0000'}
-            </span>
-            <span className="text-zinc-600">•</span>
-            <span className="text-emerald-400 font-semibold">
-              {latestBlock?.validationStatus || 'VERIFIED'}
-            </span>
-          </div>
+        {/* Bottom Floating Telemetry Ribbon (Admin Only) */}
+        {role === 'admin' && (
+          <footer className="flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] text-zinc-500 tracking-widest uppercase">
+            {/* Block Height & Hash Preview */}
+            <div className="pointer-events-auto flex items-center space-x-3 px-3 py-1.5 rounded-lg bg-black/50 border border-white/[0.06] backdrop-blur-md">
+              <span className="text-zinc-400">BLOCK:</span>
+              <span className="text-white font-bold">
+                {latestBlock ? `#${latestBlock.index.toString().padStart(3, '0')}` : '#000'}
+              </span>
+              <span className="text-zinc-600">•</span>
+              <span className="text-cyan-400">
+                {latestBlock?.currentHash ? `${latestBlock.currentHash.substring(0, 10)}...` : '0x0000'}
+              </span>
+              <span className="text-zinc-600">•</span>
+              <span className="text-emerald-400 font-semibold">
+                {latestBlock?.validationStatus || 'VERIFIED'}
+              </span>
+            </div>
 
-          {/* Network Sync Status */}
-          <div className="pointer-events-auto flex items-center space-x-3 px-3 py-1.5 rounded-lg bg-black/50 border border-white/[0.06] backdrop-blur-md">
-            <span className="flex items-center gap-1 text-zinc-400">
-              <Radio className="h-3 w-3 text-cyan-400 animate-pulse" />
-              <span>GOSSIP MESH:</span>
-            </span>
-            <span className="text-white font-bold">{Math.max(1, peerCount + 1)} NODES</span>
-            <span className="text-zinc-600">•</span>
-            <span className="text-emerald-400">CHAIN SYNCHRONIZED</span>
-          </div>
-        </footer>
+            {/* Network Sync Status */}
+            <div className="pointer-events-auto flex items-center space-x-3 px-3 py-1.5 rounded-lg bg-black/50 border border-white/[0.06] backdrop-blur-md">
+              <span className="flex items-center gap-1 text-zinc-400">
+                <Radio className="h-3 w-3 text-cyan-400 animate-pulse" />
+                <span>GOSSIP MESH:</span>
+              </span>
+              <span className="text-white font-bold">{Math.max(1, peerCount + 1)} NODES</span>
+              <span className="text-zinc-600">•</span>
+              <span className="text-emerald-400">CHAIN SYNCHRONIZED</span>
+            </div>
+          </footer>
+        )}
       </div>
     </>
   );
