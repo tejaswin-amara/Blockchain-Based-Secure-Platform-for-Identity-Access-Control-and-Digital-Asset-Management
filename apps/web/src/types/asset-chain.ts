@@ -131,6 +131,8 @@ export interface AssetChainContextValue {
   getCurrentOwner: (assetId: string) => string | undefined;
   /** Summarise all unique assets. */
   listAssets: () => AssetSummary[];
+  /** Alias for listAssets. */
+  getAssets?: () => AssetSummary[];
   /** Import an externally-received block (from P2P). */
   importBlock: (block: AssetBlock) => boolean;
   /** Whether the genesis block exists. */

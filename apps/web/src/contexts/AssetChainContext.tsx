@@ -293,6 +293,7 @@ export function AssetChainProvider({ children }: { children: React.ReactNode }) 
       getAssetHistory,
       getCurrentOwner,
       listAssets,
+      getAssets: listAssets,
       importBlock,
       isInitialized: chain.length > 0,
     }),

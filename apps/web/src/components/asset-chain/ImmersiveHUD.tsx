@@ -216,16 +216,16 @@ export function ImmersiveHUD({
           </div>
         </header>
 
-        {/* Center Floating Discovery Indicator (Only when NOT inspecting) */}
+        {/* Bottom Floating Discovery Indicator (Consistently above footer, clearing blocks) */}
         {!isInspecting && (
-          <div className="flex justify-center pointer-events-none pb-2">
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 pointer-events-none z-20">
             <motion.div
-              animate={{ y: [0, -4, 0], opacity: [0.6, 1, 0.6] }}
+              animate={{ y: [0, -4, 0], opacity: [0.75, 1, 0.75] }}
               transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
-              className="px-4 py-2 rounded-full border border-white/[0.08] bg-black/60 backdrop-blur-xl text-[10px] text-zinc-400 tracking-wider uppercase flex items-center gap-2 shadow-2xl"
+              className="px-5 py-2.5 rounded-full border border-white/[0.12] bg-black/80 backdrop-blur-xl text-[10px] text-zinc-300 tracking-widest uppercase flex items-center gap-2.5 shadow-2xl"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping" />
-              <span>CLICK BLOCK TO INSPECT INTERNAL CORE • DRAG TO ORBIT</span>
+              <span className="h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
+              <span>EXPLORE THE CHAIN — SELECT A BLOCK TO INSPECT • DRAG TO ORBIT</span>
             </motion.div>
           </div>
         )}
