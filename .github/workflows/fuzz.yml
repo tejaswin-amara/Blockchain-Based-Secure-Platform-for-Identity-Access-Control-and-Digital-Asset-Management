@@ -53,5 +53,7 @@ jobs:
           test-mode: property
           test-limit: 1000
           seq-len: 20
-          crytic-args: --compile-force-framework hardhat
+          crytic-args: --compile-force-framework solc
+          solc-version: 0.8.24
+          solc-args: --base-path . --include-path node_modules --evm-version cancun
           output-file: echidna-results.txt
