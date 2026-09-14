@@ -1,20 +1,32 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { useAuth, UserRole } from '@/contexts/AuthContext';
+import { useWeb3 } from '@/contexts/Web3Context';
 import { ShieldAlert, ArrowLeft, Shield, Lock } from 'lucide-react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: UserRole;
+  requiredRole?: string;
 }
 
 export function ProtectedRoute({ children, requiredRole = 'admin' }: ProtectedRouteProps) {
-  const { role, setRole } = useAuth();
+  const { role, isConnected } = useWeb3();
   const [, setLocation] = useLocation();
 
-  if (requiredRole === 'admin' && role !== 'admin') {
+  useEffect(() => {
+    if (!isConnected) {
+      setLocation('/login');
+    }
+  }, [isConnected, setLocation]);
+
+  if (!isConnected) {
+    return null; // Don't render until redirected
+  }
+
+  const userRole = role?.toLowerCase() || 'user';
+  
+  if (requiredRole && userRole !== requiredRole.toLowerCase()) {
     return (
       <div className="min-h-screen bg-[#030508] text-zinc-100 flex items-center justify-center p-6 select-none font-sans">
         <div className="max-w-md w-full p-8 rounded-2xl border border-red-500/20 bg-zinc-950/80 backdrop-blur-xl shadow-2xl text-center space-y-6">
@@ -37,17 +49,7 @@ export function ProtectedRoute({ children, requiredRole = 'admin' }: ProtectedRo
 
           <div className="pt-2 space-y-3">
             <button
-              onClick={() => {
-                setRole('admin');
-              }}
-              className="w-full py-3 px-4 rounded-xl bg-[var(--copper)] hover:bg-[var(--copper-bright)] text-white font-medium text-xs tracking-wider uppercase transition-all cursor-pointer shadow-lg flex items-center justify-center space-x-2"
-            >
-              <Shield className="h-4 w-4" />
-              <span>Switch to Administrator Role</span>
-            </button>
-
-            <button
-              onClick={() => setLocation('/')}
+              onClick={() => setLocation('/dashboard')}
               className="w-full py-2.5 px-4 rounded-xl border border-white/[0.08] hover:bg-white/[0.04] text-zinc-400 hover:text-white text-xs transition-colors cursor-pointer flex items-center justify-center space-x-2"
             >
               <ArrowLeft className="h-3.5 w-3.5" />

@@ -1,6 +1,8 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
+import { useWeb3 } from './Web3Context';
+import { toast } from 'sonner';
 
 export type UserRole = 'admin' | 'user';
 
@@ -16,32 +18,20 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-const ROLE_STORAGE_KEY = 'blockchain_app_role';
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [role, setRoleState] = useState<UserRole>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(ROLE_STORAGE_KEY);
-      if (saved === 'user' || saved === 'admin') {
-        return saved;
-      }
-    }
-    return 'admin';
-  });
+  const web3 = useWeb3();
+
+  const role = (web3.role?.toLowerCase() as UserRole) || 'user';
+  const userName = web3.userName || 'Anonymous User';
+  const userWallet = web3.account || '';
 
   const setRole = (newRole: UserRole) => {
-    setRoleState(newRole);
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(ROLE_STORAGE_KEY, newRole);
-    }
+    toast.info('Role is determined by your wallet');
   };
 
   const toggleRole = () => {
-    setRole(role === 'admin' ? 'user' : 'admin');
+    toast.info('Role is determined by your wallet');
   };
-
-  const userName = role === 'admin' ? 'Admin Operator' : 'Alice Vance';
-  const userWallet = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8';
 
   const value = useMemo(
     () => ({

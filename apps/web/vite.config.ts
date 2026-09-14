@@ -17,6 +17,10 @@ export default defineConfig({
     strictPort: false,
     allowedHosts: [".manus.computer", "localhost", "127.0.0.1"],
     proxy: {
+      "/api": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
       "/v1": {
         target: "http://localhost:8000",
         changeOrigin: true,
