@@ -55,5 +55,5 @@ jobs:
           seq-len: 20
           crytic-args: --compile-force-framework solc
           solc-version: 0.8.24
-          solc-args: --base-path . --include-path node_modules
+          solc-args: --base-path . --include-path node_modules --evm-version cancun
           output-file: echidna-results.txt
