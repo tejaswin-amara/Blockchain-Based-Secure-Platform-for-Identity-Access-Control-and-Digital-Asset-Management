@@ -53,6 +53,7 @@ build/
 artifacts/
 cache/
 cache_hardhat/
+crytic-export/
 typechain-types/
 typechain/
 coverage.json
@@ -108,3 +109,5 @@ reports/
 
 # Keep empty directories only with an explicit placeholder
 !.gitkeep
+deployments/local.json
+.agents/
