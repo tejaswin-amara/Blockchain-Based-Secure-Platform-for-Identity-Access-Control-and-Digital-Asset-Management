@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@types/chai': 5.2.2
+  '@types/chai': 5.2.3
   adm-zip@<0.6.0: ^0.6.0
   bn.js@<4.12.3: ^4.12.3
   cookie@<0.7.0: ^0.7.0
@@ -590,9 +590,6 @@ packages:
 
   '@types/chai-as-promised@8.0.2':
     resolution: {integrity: sha512-meQ1wDr1K5KRCSvG2lX7n7/5wf70BeptTKst0axGvnN6zqaVpRqegoIbugiAPSqOW9K9aL8gDVrm7a2LXOtn2Q==}
-
-  '@types/chai@5.2.2':
-    resolution: {integrity: sha512-8kB30R7Hwqf40JPiKhVzodJs2Qc1ZJ5zuT3uzw5Hq/dhNCl3G3l83jfpdI1e20BP348+fV7VIL/+FxaXkqBmWg==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -2625,11 +2622,7 @@ snapshots:
 
   '@types/chai-as-promised@8.0.2':
     dependencies:
-      '@types/chai': 5.2.2
-
-  '@types/chai@5.2.2':
-    dependencies:
-      '@types/deep-eql': 4.0.2
+      '@types/chai': 5.2.3
 
   '@types/chai@5.2.3':
     dependencies:
